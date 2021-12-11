@@ -1,0 +1,5 @@
+Example output
+
+Gamma Rate = 10110 (22)
+Epsilon Rate = 01001 (9)
+Power Consumption = 198
