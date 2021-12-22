@@ -17,11 +17,13 @@ def getFileContentAsList(filePath):
 
 
 
-def printAnswer(value):
+def printAnswer(value, part=1):
     print("\n")
+    print("Part %d" % part)
     print(sep2*25)
     print("Answer = %s" % str(value))
     print(sep2*25)
+    print("\n")
 
 
 # Valdate a set of results
