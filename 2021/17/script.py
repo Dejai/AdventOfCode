@@ -102,13 +102,6 @@ def getTrajectoryResults(xV, yV, xRangeVals, yRangeVals):
 '''
 ***************************************************************
     Run
-
-    Plan:
-        'x' increases by X velocity
-            decrease/increase by 1 towards 0
-            If negative ... +1
-            If positive ... -1
-        'y' increase by Y 
 ***************************************************************
 '''
 
