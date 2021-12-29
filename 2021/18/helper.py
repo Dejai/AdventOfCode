@@ -1,4 +1,5 @@
 import math
+from math import floor,ceil
 from collections import deque
 
 
@@ -171,8 +172,8 @@ class Pair:
         # Create the split pair
         if value is not None and side is not None:
             # Setup new split pair
-            newLeft = math.floor(value/2)
-            newRight = math.ceil(value/2)
+            newLeft = floor(value/2)
+            newRight = ceil(value/2)
             newPair = Pair( [newLeft, newRight], self )
 
             # Reassign the split pair, and account for explode if needed
