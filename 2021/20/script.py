@@ -134,17 +134,14 @@ def iterateCanvasUpdate(canvas, iterations):
     infiniteFlag = None
     
     for idx in range(0,iterations):
-
-        print("Iteration #%d" % (idx+1))
+        
         default = infiniteFlag if infiniteFlag is not None else "."
 
-        print("Default = " + default)
         expandedCanvas = expandCanvas(canvas, default)
         nextCanvas = processCanvas(expandedCanvas, default)
         canvas = nextCanvas
 
         infiniteFlag = keyMap[default*9]
-        print('\n')
 
     printCanvas(canvas)
 
