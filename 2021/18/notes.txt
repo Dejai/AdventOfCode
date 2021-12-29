@@ -1,0 +1,307 @@
+FINAL NOTES:
+    * I was close at first -- doing all explosions first
+    * Was not properly prioritizing the left-hand side of the tree
+    * This post on reddit helped clear things up --https://www.reddit.com/r/adventofcode/comments/rj1p92/2021_day_18_part_1_if_i_encounter_a_pair_that/hp17u0t/
+
+
+_______________________________________________________________
+
+INITIAL NOTES:
+
+after addition: [[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]
+
+after explode:  [[[[0,7],4],[7,[[8,4],9]]],[1,1]]
+after explode:  [[[[0,7],4],[15,[0,13]]],[1,1]]
+
+after split:    [[[[0,7],4],[[7,8],[0,13]]],[1,1]]
+after split:    [[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]
+
+after explode:  [[[[0,7],4],[[7,8],[6,0]]],[8,1]]
+
+
+
+
+#Pair (level)
+Pair 1 (0)
+    left =  [ [[4,3],4] , 4 ] (pair)
+
+        left = [ [4,3],4 ] (pair)
+
+            left = [4 , 3]  (pair)
+                left = 4 (digit)
+                right = 3 (digit)
+
+            right = 4 (digit)
+
+        right =  4 (digit)
+
+    right = [ 7, [[8,4],9] ] (pair)
+
+        left = 7 (digit)
+
+        right = [[8,4],9] (pair)
+            
+            left = 8,4 (pair)
+                left = 8 (digit)
+                right = 4 (digit)
+            
+            right = 9 (digit)
+
+
+Pair 2 (0)
+    left = 1 (digit)
+    right = 1 (digit)
+
+
+Added Pair
+    left = Pair 1
+    right = Pair 2
+
+    left = [[[[4,3],4],4],[7,[[8,4],9]]] (pair)
+
+        left =  [ [[4,3],4] , 4 ] (pair)
+
+            left = [ [4,3],4 ] (pair)
+                -- leftDig (None); rightDig(4)
+                left = [4 , 3]  (pair)
+                    left = 4 (digit)
+                    right = 3 (digit)
+
+                right = 4 (digit)
+
+            right =  4 (digit)
+
+        right = [ 7, [[8,4],9] ] (pair)
+
+            left = 7 (digit)
+
+            right = [[8,4],9] (pair)
+                --left(7); right =None
+                left = 8,4 (pair)
+                    left = 8 (digit)
+                    right = 4 (digit)
+                
+                right = 9 (digit)
+
+    right =  [1,1] (pair)
+        left = 1 (digit)
+        right = 1 (digit)
+
+
+
+Exploded (after 1):
+
+    left = [ [[0,7],4], [7,[[8,4],9]]] (pair)
+
+        left = [[0,7],4] (pair)
+
+            left = [0,7] (pair)
+                left = 0 (digit)
+                right = 7 (digit)
+        
+            right = 4 (digit)
+
+        right = [7,[[8,4],9]] (pair)
+
+            right = 7 (digit)
+
+            left = [ [8,4], 9 ] (pair)
+
+                left = [8, 4] (pair)
+                    left = 8 (digit)
+                    right = 4 (digit)
+
+                right = 9 (digit)
+
+
+
+    right =  [1,1] (pair)
+        left = 1 (digit)
+        right = 1 (digit)
+
+----------------------------------------------------------
+
+
+
+Cases to consider:
+    ADD TO RIGHT:
+        > If parent right is one being exploded .... grandparent becomes parent
+        > If parent right is a digit ....easy, just add
+        > If parent right is a pair .... go DOWN that one; Add to any value on left?
+
+        if parent.right is NOT source and is a pair || digit .... add value to that
+        ELSE: increase parent if (possible)
+        else: just return ... nowhere to go
+
+
+
+Example 1:
+
+[
+    [
+        [
+            [
+                [4,3],
+                4
+            ]
+            ,
+            4
+        ],
+        [
+            7,
+            [
+                [8,4],
+                9
+            ]
+        ]
+    ]
+    ,
+    [
+        1,
+        1
+    ]
+]
+
+Example 1.1:
+[
+    [
+        [
+            [
+                0,
+                7
+            ]
+            ,
+            4
+        ],
+        [
+            7,
+            [
+                [8,4],
+                9
+            ]
+        ]
+    ]
+    ,
+    [1,1]
+]
+
+
+
+Example 2:
+[
+    [
+        [
+            [0,7],
+            4
+        ],
+        [
+            7,
+            [
+                [8,4],
+                9
+            ]
+        ]
+    ]
+    ,
+    [1,1]
+]
+
+
+Example 2.1:
+[
+    [
+        [
+            [0,7],
+            4
+        ],
+        [
+            [6, 8]
+            ,
+            [
+                [8,4]
+                ,
+                [9,9]
+            ]
+        ]
+    ]
+    ,
+    [1,1]
+]
+
+Example 2.2:
+[
+    [
+        [
+            [0,7],
+            4
+        ],
+        [
+            [6, 8]
+            ,
+            [
+                [8,4]
+                ,
+                [
+                    [1,2],
+                    [9,9]
+                ]
+            ]
+        ]
+    ]
+    ,
+    [1,1]
+]
+
+
+
+Example 3:
+[
+    [
+        [
+            [0, 7],
+            4
+        ]
+        , 
+        [
+            [7, 8],
+            [
+                0, 
+                [6, 7]
+            ]
+        ]
+    ]
+    ,
+    [1, 1]
+]
+
+
+
+Example 4:
+[
+    [
+        [
+            [4, 0], 
+            [5, 0]
+        ], 
+        [
+            [
+                [4, 5],
+                [2, 6]], 
+            [9, 5]
+        ]
+    ]
+    , 
+    [
+        7, 
+        [
+            [
+                [3, 7], 
+                [4, 3]
+            ], 
+            [
+                [6, 3], 
+                [8, 8]
+            ]
+        ]
+    ]
+]
