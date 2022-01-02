@@ -10,9 +10,10 @@ from collections import deque
 ***************************************************************
 '''
 
-inputList = shared.getFileContentAsList("./example.txt")
-goalList = shared.getFileContentAsList("./goal1.txt")
+inputList = shared.getFileContentAsList("./example2.txt")
+goalList = shared.getFileContentAsList("./goal2.txt")
 
+DEBUG = False
 
 '''
 ***************************************************************
@@ -58,31 +59,31 @@ def createBurrowMap(inputList):
     
 
 # Depths first search of states
-def searchStates(initialState, goalState):
+def searchStates(initialState, goalState, maxIterations=500000):
 
     # Hopefully the states that contain our goal states
     goalStates = []  # Stores the different states that arrived at the goal (along with cost)
-    visitedOg = []  # The states visited (so they are not explored again)
-    visited2 = {}
-
     visited = {}
     deadends = [] # Storing the deadends so I can see them later (for troubleshooting)
     theQueue = deque()    # Setup queue, with root node first
     
-    goalStateId = goalState.getStateIdentifier()
     # STEP 1: Append the initial state to the list
     theQueue.append(initialState)
 
+    # STEP 2: Store the ID for the goal state; Makes it easy to compare if a reached state is legit
+    initialStateId = initialState.getStateIdentifier()
+    goalStateId = goalState.getStateIdentifier()
 
+    # Store the best cost discovered so far; If a state has a higher cost than that, then don't bother check along that state
     bestCost = None
     
     # Use DFS to get the left/right digits based on left-side priority of nodes
-    c = 1
+    iterationCounter = 1
     while theQueue:
 
-        c += 1
-        # Arbitrary max
-        if c > 2000000:
+        iterationCounter += 1
+        # Arbitrary max to stop checking; Just to see if a discovered goal suffices yet
+        if iterationCounter > maxIterations:
             break
 
         # Pop the first state; Get its ID and moves
@@ -90,19 +91,9 @@ def searchStates(initialState, goalState):
         stateId = state.getStateIdentifier()
         moves = state.getMovesFromState()
 
-        # Add the cost of this visited
-        visited2[stateId] = state.cost
-        
-        
-        if stateId not in visited:
-            visited[stateId] = []
-
-        # if bestCost is not None and bestCost < 13000 and state.cost == 11194:
-        #     print(state)
-        #     print(state.prevState)
-        #     print("Best:%d .... This:%d" %(bestCost, state.cost))
-        #     c += 1
-        #     #break
+ 
+        if iterationCounter % 1000000 == 0:
+            print("SILL GOING .... Iteration: " + str(iterationCounter))
 
         # If we found a goal already, and this state is more than that, don't keep going
         if bestCost is not None and state.cost >= bestCost:
@@ -110,43 +101,49 @@ def searchStates(initialState, goalState):
 
         # Check if state is a goal state:
         elif stateId == goalStateId:
-            print("\n GOAL STATE: %s at cost = %d" % ( str(state), state.cost) )
+            print("\nIteration: %d\nGOAL STATE: %s at cost = %d\n" % (iterationCounter, str(state), state.cost) )
             goalStates.append( (state.cost, state) )
 
             if bestCost is None or state.cost < bestCost:
                 bestCost = state.cost
-
             continue
 
-        # elif 
-            
         elif len(moves) == 0:
-            # print("\tDEADEND: %s" % str(state))
             deadends.append(stateId)
             continue
         else:
-            # visited.append(stateId)
+            
+            # Add a state as visited
+            visited[stateId] = state.cost
+
             for move in moves:
 
+                # Run the new state
+                newState = state.makeMove(move)
+
                 # If we have already made a move from a state, don't do it again
-                if move in visited[stateId]:
+                if (newState.getStateIdentifier() in visited) and (newState.cost > visited[stateId]+1000):
+                    continue
+                    # print("Cost comparison: %d vs %d" % (newState.cost, visited[stateId]))
+                    # continue
+
+                # If that new state is already a deadend, don't bother adding it.
+                if newState.getStateIdentifier() in deadends:
                     continue
 
-                newState = state.makeMove(move)
-                # print(newState)
-                # print("State")
-                # print("\tHallways: %s" % ( str(newState.hallway) ) )
-                # print("\tRooms: %s" % ( str(newState.rooms) ) )
-                # print('\n')
                 theQueue.append(newState)
 
 
+    # for st in stateFreq:
+    #     print("%s == %d" % (st, stateFreq[st]))
 
-    srted = sorted(goalStates, key = lambda x: x[0])
-    minimum = srted[0][1]
-    print("\n\nTHE MINIMUM EFFORT MOVEMENTS:\n")
-    print("-"*90)
-    minimum.printStateHistory()
+
+    if DEBUG:
+        srted = sorted(goalStates, key = lambda x: x[0])
+        minimum = srted[0][1]
+        print("\n\nTHE MINIMUM EFFORT MOVEMENTS:\n")
+        print("-"*90)
+        minimum.printStateHistory()
 
 
 # Test a series of moves

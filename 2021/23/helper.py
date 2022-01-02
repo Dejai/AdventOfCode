@@ -96,7 +96,8 @@ class State:
 
         # Sort the moves based on a certain combo of priority
         #srted = sorted(allMoves, key = lambda x: (x['moveType'],x['target'], x['cost'], x['distanceFromTarget']), reverse=True )
-        srted = sorted(allMoves, key = lambda x: (x['moveType'], x['cost'] ), reverse=True )
+        # srted = sorted(allMoves, key = lambda x: (x['moveType'], x['cost'] ), reverse=True )
+        srted = sorted(allMoves, key = lambda x: (x['cost'] ), reverse=True)
 
         # print("\n\tMOVES FROM THIS STATE:")
         # for x in srted:
@@ -279,28 +280,6 @@ class State:
 
         return (canEnter,roomIdx)
 
-
-    # Check if this state is a goal state
-    def isGoal(self):
-        isEnd = True
-
-        for room in self.rooms:
-            roomSet = True  # Assume it's all set at first
-            roomOccupants = self.rooms[room]
-            roomVals = [ roomOccupants[0] ]
-
-            # Check every evelement in the room (should all be the same)
-            for element in roomOccupants:
-                # If a different type is seen, then we're not set
-                if element not in roomVals:
-                    roomSet = False
-            
-            if not roomSet:
-                isEnd = False
-                break
-
-        return isEnd
-
     
     # Printout the details of this state
     def printState(self):
@@ -400,3 +379,16 @@ class State:
         
         if self.prevState is not None:
             self.prevState.printStateHistory()
+
+    
+    # Print current state and all previous states -- to see history of moves
+    def getStateHistory(self, prevStates=[]):
+                
+        if self.getStateIdentifier() == "State: .B1.2.3B4.. | r1:.A | r2:.D | r3:CC | r4:DA":
+            self.printState()
+        
+        if self.prevState is None:
+            return prevStates
+        else:
+            prevStates.append(self.getStateIdentifier())
+            return self.prevState.getStateHistory(prevStates)
