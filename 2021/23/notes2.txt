@@ -1,0 +1,58 @@
+  0 1 2 3 4 5 6 7 8 9 10
+# # # # # # # # # # # # #
+# . . X . X . X . X . . #
+# # # B # C # B # D # # #
+    # A # D # C # A #
+    # # # # # # # # #
+
+------------------------------------------------------------------
+
+Iteration #1
+
+    Slot 1:
+        B -- depends on ( 2.C, 2.D )
+        A -- depends on (n/a) .... doesn't need to move
+
+    Slot 2:
+        C -- depends on ( 3.B )
+        D -- depends on ( 2.C )
+
+    Slot 3:
+        B -- depends on ( 2.C, 2.D )
+        C -- depends on (n/a ) ... doesn't need to move
+
+    Slot 4:
+        D -- depends on ( n/a ) ... at home, but may need to move
+        A -- depends on ( 4.D, 1.B )
+    ~~~~~~~~~~~~~
+    Top slot with least dependencies? == 2.C
+        ... Depends on 3.B 
+
+        Action = Move 3.B 
+        Where?
+            > towards goal (2)
+            > don't block slots 3 or 4
+        Sooo:
+            > Go to first available spot to LEFT of goal 
+            > Allows things in there to get out. 
+            > Ends up at 3
+
+--------------------------
+
+Iteration 2
+    Slot 1:
+        B -- depends on ( 2.C, 2.D )
+        A -- depends on (n/a) .... doesn't need to move
+
+    Slot 2:
+        C -- depends on ( 3.B ) CHECK
+        D -- depends on ( 2.C, 4.D, 4.A )
+
+    Slot 3:
+        B -- depends on ( 2.C, 2.D )
+        C -- depends on (n/a ) ... doesn't need to move
+
+    Slot 4:
+        D -- depends on ( n/a ) ... at home, but may need to move
+        A -- depends on ( 4.D, 1.B )
+    ~~~~~~~~~~~~~
