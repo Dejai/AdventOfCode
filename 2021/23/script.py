@@ -10,7 +10,7 @@ from collections import deque
 ***************************************************************
 '''
 
-inputList = shared.getFileContentAsList("./example2.txt")
+inputList = shared.getFileContentAsList("./input2.txt")
 goalList = shared.getFileContentAsList("./goal2.txt")
 
 DEBUG = False
@@ -108,6 +108,9 @@ def searchStates(initialState, goalState, maxIterations=500000):
                 bestCost = state.cost
             continue
 
+        elif stateId in visited and state.cost > visited[stateId]:
+            continue
+
         elif len(moves) == 0:
             deadends.append(stateId)
             continue
@@ -121,21 +124,19 @@ def searchStates(initialState, goalState, maxIterations=500000):
                 # Run the new state
                 newState = state.makeMove(move)
 
-                # If we have already made a move from a state, don't do it again
-                if (newState.getStateIdentifier() in visited) and (newState.cost > visited[stateId]+1000):
-                    continue
-                    # print("Cost comparison: %d vs %d" % (newState.cost, visited[stateId]))
-                    # continue
-
-                # If that new state is already a deadend, don't bother adding it.
-                if newState.getStateIdentifier() in deadends:
-                    continue
-
-                theQueue.append(newState)
+                newStateId = newState.getStateIdentifier()
+                newStateCost = newState.cost
+                isDeadend = newStateId in deadends
 
 
-    # for st in stateFreq:
-    #     print("%s == %d" % (st, stateFreq[st]))
+                if not isDeadend:
+                    # Only add a new state if it has not been visited or if it has a lower cost than previously seen
+                    if newStateId in visited and newStateCost < visited[newStateId]:
+                        theQueue.append(newState)
+                        visited[newStateId] = newStateCost
+
+                    elif newStateId not in visited:
+                        theQueue.append(newState)
 
 
     if DEBUG:

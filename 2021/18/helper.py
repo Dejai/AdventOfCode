@@ -109,7 +109,6 @@ class Pair:
                 # Add splits
                 if node >= 10 and len(splittable) == 0:
                     splittable.append(parent)
-
                 continue
 
             elif nodeType == Pair and depth >= 4 and node.isAllDigits() and len(explodable) == 0:
