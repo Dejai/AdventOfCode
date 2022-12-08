@@ -26,10 +26,8 @@ realInput = helper.getFileContentAsList("./input.txt")
 inputList = exampleInput
 print(inputList)
 
-
 # Print answer for Part 1
 helper.printAnswer(1,"Part 1 Default")
-
 
 # Print answer for Part 2
 helper.printAnswer(2, "Part 2 Default")
