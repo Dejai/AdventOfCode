@@ -25,6 +25,19 @@ def printAnswer(part=1, value=1):
     print(sep2*25)
     print("\n")
 
+# Print out a given grid
+def printGrid(grid, toFile=None):
+    gridPrint = ""
+    for row in grid:
+        gridPrint += "".join(row) + "\n"
+    
+    if toFile is not None:
+        file = open(toFile, "w+")
+        file.write(gridPrint)
+        file.close()
+        print("Saved grid to file: {0}".format(toFile))
+    else:
+        print(gridPrint)
 
 # Valdate a set of results
 def validateResults(expectedList, resulstList):
