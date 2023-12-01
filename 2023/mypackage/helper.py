@@ -56,3 +56,20 @@ def compareLists(expectedList, resulstList):
         for line in extras:
             print(line)
     print(sep1*50)
+
+
+# Map input list to output list
+def mapInputToOutput(inputList, outputList):
+    idx = 0
+    mapList = []
+    fileName = "./compare.txt"
+    for idx in range(0, len(inputList)):
+        inputVal = inputList[idx]
+        outputVal = outputList[idx] if idx < len(outputList) else None
+        results = "{0} - {1}".format(inputVal, outputVal)
+        mapList.append(results)
+    with( open(fileName, "w+") as output):
+        for line in mapList:
+            output.write(line + '\n')
+    print("Comparison results at: " + fileName)
+    

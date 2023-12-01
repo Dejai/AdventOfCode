@@ -6,8 +6,7 @@ from mypackage import helper
     Input
 ***************************************************************
 '''
-exampleInput = helper.getFileContentAsList("./example.txt")
-realInput = helper.getFileContentAsList("./input.txt")
+inputList = helper.getFileContentAsList("./example1.txt")
 
 '''
 ***************************************************************
@@ -21,10 +20,6 @@ realInput = helper.getFileContentAsList("./input.txt")
     Run
 ***************************************************************
 '''
-# What are we working with; Change this variable to use the real input when ready
-inputList = exampleInput
-print(inputList)
-
 # Print answer for Part 1
 helper.printAnswer(1,"Part 1 Default")
 
