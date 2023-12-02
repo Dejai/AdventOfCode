@@ -28,12 +28,10 @@ def productOfList(numList):
 def evalGame(gameResults):
     eligible = True
     game,subsets = gameResults.split(": ")
-    cubeSets = subsets.split("; ")
     fewest = getCubeCounts() 
-    for cubeSet in cubeSets:
+    for cubeSet in subsets.split("; "):
         limits = getCubeCounts(12, 13, 14)
-        cubeList = cubeSet.split(", ")
-        for cubes in cubeList:
+        for cubes in cubeSet.split(", "):
             count,color = cubes.split(" ")
             count = int(count)
             if color in fewest and count > fewest[color]:
