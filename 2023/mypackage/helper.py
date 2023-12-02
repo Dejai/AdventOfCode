@@ -4,11 +4,10 @@ sep2 = "-"
 
 # Get the file input as a list of rows
 def getFileContentAsList(filePath):
-    inputFile = open(filePath, "r+") # open file
-    content = inputFile.read() # read full content
-    inputFile.close()
-    # Split on new line and insert each frow in list
-    inputList = [ x for x in content.split("\n") if x != '' ]
+    inputList = []
+    with open(filePath, "r+") as inputFile:
+        content = inputFile.read().split("\n") # read full content
+        inputList = [ x for x in content if x != "" ]
     return inputList
 
 # Print out the answer
