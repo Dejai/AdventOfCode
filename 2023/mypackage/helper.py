@@ -19,6 +19,12 @@ def printAnswer(part=1, value=1):
     print(sep2*25)
     print("\n")
 
+# Print a list to a file
+def printToFile(inputList, fileName="output.txt"):
+    with open(fileName, "w+") as outputFile:
+        for line in inputList:
+            outputFile.write(str(line)+"\n")
+
 # Print out a given grid
 def printGrid(grid, toFile=None):
     gridPrint = ""
