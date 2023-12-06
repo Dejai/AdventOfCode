@@ -3,12 +3,16 @@ sep1 = "*"
 sep2 = "-"
 
 # Get the file input as a list of rows
-def getFileContentAsList(filePath):
+def getFileContentAsList(filePath, splitChar="\n"):
     inputList = []
     with open(filePath, "r+") as inputFile:
-        content = inputFile.read().split("\n") # read full content
+        content = inputFile.read().split(splitChar) # read full content
         inputList = [ x for x in content if x != "" ]
     return inputList
+
+# Convert a string to a list, based on split char
+def toList(value, splitChar=" "):
+    return list( filter(lambda x: x != "", value.split(splitChar)) )
 
 # Print out the answer
 def printAnswer(part=1, value=1):
