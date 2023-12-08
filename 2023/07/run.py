@@ -53,7 +53,6 @@ class CardSorter:
     def compareHands(self, pair1, pair2):
         hand1 = pair1[0]
         hand2 = pair2[0]
-
         hand1Rank = self.getHandRank(hand1)
         hand2Rank = self.getHandRank(hand2)
         if hand1Rank < hand2Rank:
@@ -61,7 +60,6 @@ class CardSorter:
         elif hand1Rank > hand2Rank:
             return 1
         else:
-            cards = list('23456789TJQKA')
             for idx in range(0, len(hand1)):
                 h1_idx = self.Cards.index(hand1[idx])
                 h2_idx = self.Cards.index(hand2[idx])
