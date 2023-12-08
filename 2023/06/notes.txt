@@ -1,0 +1,11 @@
+Input:
+    Time,Distance: (7,9)
+
+User Action:
+    > Time holding the button before start of race
+    > Range should be 0 to max time for the race (e.g. 0 - 7)
+
+Hold + Time math:
+    Hold        = user Input
+    User Time   = race time minus hold
+    Travel      = User time * hold
