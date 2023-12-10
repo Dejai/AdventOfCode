@@ -11,8 +11,12 @@ def getFileContentAsList(filePath, splitChar="\n"):
     return inputList
 
 # Convert a string to a list, based on split char
-def toList(value, splitChar=" "):
-    return list( filter(lambda x: x != "", value.split(splitChar)) )
+def toList(value, splitChar=" ",type="str"):
+    newList = list( filter(lambda x: x != "", value.split(splitChar)) )
+    if type == "int":
+        intList = [ int(x) for x in newList if x != ""]
+        return intList
+    return newList
 
 # Print out the answer
 def printAnswer(part=1, value=1):
