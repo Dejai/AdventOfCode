@@ -1,0 +1,32 @@
+Graph Builder
+    For every entry in the 2D array, just store what is surrounding it as neighbors
+    Then, some neighbors are of type = Pipe, while others are just ground
+    And, not every pipe connects, so some neighbors can be excluded if they aren't reachable. 
+
+For each pipe:
+    The pipe can only accept certain neighbors (depending on what type/direction)
+    So, two nodes in the 2D array can only be added if they have acceptable joining types
+
+Pipe Types:
+    | is a vertical pipe connecting north and south.
+    - is a horizontal pipe connecting east and west.
+    L is a 90-degree bend connecting north and east.
+    J is a 90-degree bend connecting north and west.
+    7 is a 90-degree bend connecting south and west.
+    F is a 90-degree bend connecting south and east.
+
+Might just be easier to say that every pipe only takes the 4 main cardinal points
+
+ALLOWED pipe Connections:
+    "|" -- L, J, 7, F, |
+    "-" -- L, J, 7, F, -
+    "L" -- J, 7, F, -, |
+    "J" -- L, 7, F, -, |
+    "7" -- L, J, F, -, |
+    "F" -- L, J, 7, -, |
+NOT ALLOWED pipe connections 
+    | --> 
+Allows vs. Not-Allowed Pipe Connections:
+
+        | + L
+        | + J
