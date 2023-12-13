@@ -1,0 +1,62 @@
+Twice as big doesn't mean the row itself is twice as big/long. Just means that it is "duplicated"
+    > So a new row or column gets added. 
+
+Finding shortest path from source node to any other node in the graph -- Dijkstra
+    > Then can just check for destination node, given a soruce node (the pairs)
+
+Then, after shortest path is determined, it should be a calculation to "expand" the length of that path based on how many empty rows / columns are expanded.
+
+Check how many empty rows between source & destination 
+    s0 = Source[0]
+    d0 = Destination[0]
+    
+    if s0 < d0:
+        check empty rows between s0 an d0 (exclusive)
+        Double per empty row
+    elif s0 > d0:
+        check empty rows between d0 and s0 (exclusive)
+        Double per empty row
+
+    s1 = Source[1]
+    d1 = Destination[1]
+
+    if s1 < d1:
+        
+    (Destination[0] - Source[0])
+    
+In this example:
+
+    -- Empty Rows = [3, 7]
+    -- Empty Cols = [2, 5, 8]
+
+    Trying agains: 
+        Source      = 5 (5, 1)
+        Destination = 9 (9, 4)
+
+    Initial steps == 7
+    Expanding == 9
+
+
+
+   2  5  8                    
+   v  v  v
+ ...#......
+ .......#..
+ #.........
+>..........< 3
+ ......#...
+ .#........
+ .........#
+>..........< 7
+ .......#..
+ #...#.....
+   ^  ^  ^
+
+
+   NEW APPROACH;
+        > Just do a Depth-First-Search on the source to expand
+        > Order next neighbors based on closeness to the goal node
+            checking rows + cols comparisons
+        > Then do expansions based on rows or columns crossed
+
+            NOTE: Had to adjust to make sure that I don't count a row or column twice;
