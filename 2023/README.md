@@ -19,3 +19,4 @@ Some packages that I've found useful when doing AoC problems
 * from collections import deque
 * from collections import counter   # Can be used to get frequency count of items in a string, list, etc.
 * import math
+* import itertools 
