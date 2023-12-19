@@ -1,0 +1,12 @@
+Approach:
+    Use a stack structure to check each ariation; 
+    Replace one "? at a time?
+    For each indication of a "? ... replace it with either a "." or "#"
+        > So makes 2 new variations
+    Then put the 2 new variations back into the queue of patterns to check
+    Keep going until no more "?" in the string?
+    Then check it against a REGEX for the set of groups (as defined in the input)
+    
+NOTE:
+    I realized after the fact that the pattern can be in one string more than once. 
+    So, I ended up replacing the mathing pattern and seeing if there areny "#" leftover -- if yes, then it's not a complete match
